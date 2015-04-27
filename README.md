@@ -1,8 +1,17 @@
 # What's Aggr?
 The server engine developed using C#, support Http, Socket (TCP/UDP) protocol, provide Redis, SQL, MySql, SQLite database.
 
-C# for net4.0 and net4.5.
+# Requirements
 
+.Net Framework 4.0, 4.5.
+
+
+# Links
+
+Official website£º[http://www.aggrengine.com/](http://www.aggrengine.com/)
+
+
+# Features
 
 ## Network
 
@@ -10,14 +19,12 @@ C# for net4.0 and net4.5.
 
 * Socket(TCP/UDP)
 
-
-
 ## Storage
 
 * RDS
     * SQL
     * MySql
-    * SQLite
+    * SQLite for unity3d
 
 * NoSql
     * Redis
