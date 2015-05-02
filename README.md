@@ -11,13 +11,13 @@ If you are a Unity3d or Cocos-Quick developers, it will provide you with efficie
 
 ## Features
 
-每 Is a distributed server framework.
+- Is a distributed server framework.
  
-每 provide high performance scalable HTTP and Socket and WebSocket network library.
+- provide high performance scalable HTTP and Socket and WebSocket network library.
 
-每 provide Csharp and Lua scripting engine.
+- provide Csharp and Lua scripting engine.
 
-每 provide easy to use Redis and MySQL storage library.
+- provide easy to use Redis and MySQL storage library.
 
 
 # Requirements
