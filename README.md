@@ -1,33 +1,31 @@
-# What's Aggr?
-The server engine developed using C#, support Http, Socket (TCP/UDP) protocol, provide Redis, SQL, MySql, SQLite database.
+# What is Aggr ?
+
+Aggr is an open source engine designed to allow developers to easily create game server.
+
+
+# Why use of Aggr ?
+
+Aggr is a streamlined, efficient, easy to use Csharp framework, which provides Unity3d or Cocos-Quick code running on the server script engine.
+
+If you are a Unity3d or Cocos-Quick developers, it will provide you with efficient game development.
+
+## Features
+
+每 Is a distributed server framework.
+ 
+每 provide high performance scalable HTTP and Socket and WebSocket network library.
+
+每 provide Csharp and Lua scripting engine.
+
+每 provide easy to use Redis and MySQL storage library.
+
 
 # Requirements
 
-.Net Framework 4.0, 4.5.
+Aggr on .Net Framework 4.0, 4.5 runtime.
 
 
 # Links
 
-Official website: [http://www.aggrengine.com/](http://www.aggrengine.com/)
+website: [http://www.AggrEngine.com/](http://www.aggrengine.com/)
 
-
-# Features
-
-## Network
-
-* Http
-
-* Socket(TCP/UDP)
-
-## Storage
-
-* RDS
-    * SQL
-    * MySql
-    * SQLite for unity3d
-
-* NoSql
-    * Redis
-
-* File
-    * Excel
