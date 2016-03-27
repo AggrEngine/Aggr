@@ -19,7 +19,7 @@ namespace AggrEngine
 
         internal static void Start(string[] args)
         {
-            //test begin
+            //todo test begin
             Aggr.Info("test info...");
             Aggr.Debug("test debug...");
             Aggr.Warn("test warn...");

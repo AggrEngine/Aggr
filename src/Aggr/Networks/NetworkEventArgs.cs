@@ -6,41 +6,28 @@ using System.Threading.Tasks;
 
 namespace AggrEngine.Networks
 {
+
     /// <summary>
     /// 
     /// </summary>
-    public struct SessionIdentity
+    public class NetworkEventArgs : EventArgs
     {
         /// <summary>
         /// 
         /// </summary>
-        public uint ID;
-
-    }
-
-    /// <summary>
-    /// Network session of client
-    /// </summary>
-    public interface INetworkSession
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        SessionIdentity SessionID { get; }
+        public NetworkEventCode EventCode { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        INetwork Network { get; }
-
+        public byte[] Data { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="network"></param>
-        void Bind(INetwork network);
+        public int Offset { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        void UnBind();
+        public int Count { get; set; }
     }
 }

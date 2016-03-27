@@ -47,8 +47,13 @@
     <Compile Include="Aggr.Network.cs" />
     <Compile Include="Aggr.LogWarpper.cs" />
     <Compile Include="Aggr.cs" />
+    <Compile Include="Networks\NetworkClient.cs" />
     <Compile Include="Networks\NetworkConfigure.cs" />
     <Compile Include="Networks\INetworkSession.cs" />
+    <Compile Include="Networks\NetworkEventArgs.cs" />
+    <Compile Include="Networks\NetworkEventCode.cs" />
+    <Compile Include="Networks\NetworkException.cs" />
+    <Compile Include="Networks\NetworkServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime.cs" />
   </ItemGroup>
