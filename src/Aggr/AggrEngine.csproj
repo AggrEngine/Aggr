@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggr.Json.cs" />
     <Compile Include="Aggr.Rpc.cs" />
     <Compile Include="Aggr.Network.cs" />
     <Compile Include="Aggr.LogWarpper.cs" />
     <Compile Include="Aggr.cs" />
     <Compile Include="AppBase.cs" />
+    <Compile Include="JsonConfig.cs" />
     <Compile Include="Networks\NetworkClient.cs" />
     <Compile Include="Networks\NetworkConfigure.cs" />
     <Compile Include="Networks\INetworkSession.cs" />

@@ -42,10 +42,12 @@ namespace AggrEngine
             Evidence evidence = new Evidence(baseEvidence);
             // Create the AppDomain
             appDomain = AppDomain.CreateDomain(AppServerId, evidence, setup);
+            appDomain.SetData("AppPath", AppPath);
             appDomain.SetData("ServerID", AppServerId);
             var app = appDomain.CreateInstanceAndUnwrap(appName, MainClass) as AppBase;
             if (app != null)
             {
+                Aggr.Info("App {0} PID:{1} is started...", MasterAppId, Process.GetCurrentProcess().Id);
                 app.Process();
             }
             else
@@ -54,10 +56,10 @@ namespace AggrEngine
             }
             if (AppServerId == MasterAppId)
             {
-                //StartServerProcess("connector-server-1");
-                //StartServerProcess("connector-server-2");
+                //TODO read config
+                StartServerProcess("connector-server-1");
+                StartServerProcess("connector-server-2");
 
-                //checkOutputTimer = new Timer(OnCheckOutput, null, 1000, 100);
             }
             RunAsync().Wait();
         }
@@ -107,7 +109,7 @@ namespace AggrEngine
             process.StartInfo.UseShellExecute = false;
             process.Start();
             serverProcess.Add(process);
-
+            Aggr.Info("App {0} PID:{1} is started...", serverID, process.Id);
         }
     }
 }

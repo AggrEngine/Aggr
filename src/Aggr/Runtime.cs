@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,10 +41,11 @@ namespace AggrEngine
         {
             get { return (Stopwatch.GetTimestamp() - dueTs) / (double)Stopwatch.Frequency; }
         }
+
         /// <summary>
         /// 
         /// </summary>
-        public static string ServerID { get; internal set; }
+        public static string AppPath { get; internal set; }
 
         /// <summary>
         /// 
@@ -69,6 +71,17 @@ namespace AggrEngine
             if (UpdateHandle != null) UpdateHandle();
 
             dueTs = Stopwatch.GetTimestamp();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static JsonConfig LoadConfig(string fileName)
+        {
+            string text = File.ReadAllText(Path.Combine(AppPath, fileName));
+            return Aggr.Json.Parse<JsonConfig>(text);
         }
     }
 }
