@@ -10,7 +10,6 @@ namespace AggrEngine
 {
     static class AppManager
     {
-
         private const string MasterAppId = "master";
         private const string MainClass = "App";
         private static AppDomain appDomain;
@@ -19,35 +18,9 @@ namespace AggrEngine
         internal static string AppPath { get; set; }
         public static string AppServerId { get; internal set; } = MasterAppId;
         static List<Process> serverProcess = new List<Process>();
-
-        static double num;
-        static long count;
-        private static void TestUpdate()
-        {
-            num += Runtime.DueTime;
-            count++;
-            Console.Write("{0}:{1}\r",count, num);
-        }
-
+        
         internal static void Start(string[] args)
         {
-            //todo test begin
-            Aggr.Info("test info...");
-            Aggr.Debug("test debug...");
-            Aggr.Warn("test warn...");
-            Aggr.Error("test error...", new Exception("error"));
-            Runtime.UpdateHandle += TestUpdate;
-            //10s stop
-            Task.Factory.StartNew(() => {
-                Thread.Sleep(10 * 1000);
-                Console.WriteLine();
-                Runtime.Stop();
-                Console.WriteLine("stop.");
-            });
-            //test end
-
-
-
             AppAssemblyFile = args[0];
             if (args.Length > 1)
             {
@@ -113,6 +86,27 @@ namespace AggrEngine
         /// </summary>
         public static void Stop()
         {
+            foreach (var p in serverProcess)
+            {
+                if (!p.HasExited)
+                {
+                    p.Kill();
+                    p.Dispose();
+                }
+            }
+        }
+
+        private static void StartServerProcess(string serverID)
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = "Aggr.exe";
+            process.StartInfo.Arguments = string.Format("{0} {1}", AppAssemblyFile, serverID);
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.Start();
+            serverProcess.Add(process);
 
         }
     }
