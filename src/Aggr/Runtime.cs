@@ -34,20 +34,16 @@ namespace AggrEngine
         public static bool IsCancel { get; private set; }
 
         /// <summary>
-        /// stop process
-        /// </summary>
-        public static void Stop()
-        {
-            IsCancel = true;
-        }
-
-        /// <summary>
         /// Gets due second time.
         /// </summary>
         public static double DueTime
         {
             get { return (Stopwatch.GetTimestamp() - dueTs) / (double)Stopwatch.Frequency; }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string ServerID { get; internal set; }
 
         /// <summary>
         /// 
@@ -55,6 +51,14 @@ namespace AggrEngine
         public static void Start()
         {
             dueTs = Stopwatch.GetTimestamp();
+        }
+
+        /// <summary>
+        /// stop process
+        /// </summary>
+        public static void Stop()
+        {
+            IsCancel = true;
         }
 
         /// <summary>

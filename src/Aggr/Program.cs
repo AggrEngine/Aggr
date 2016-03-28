@@ -12,12 +12,24 @@ namespace AggrEngine
         {
             try
             {
+                if (args.Length == 0)
+                {
+                    //command help
+                    Aggr.Info("Usage args <AssembllyName> [ServerID].");
+                    return;
+                }
+                Console.CancelKeyPress += OnCancel;
                 AppManager.Start(args);
             }
             catch (Exception ex)
             {
                 Aggr.Error("Aggr app error", ex);
             }
+        }
+
+        private static void OnCancel(object sender, ConsoleCancelEventArgs e)
+        {
+            AppManager.Stop();
         }
     }
 }

@@ -47,6 +47,7 @@
     <Compile Include="Aggr.Network.cs" />
     <Compile Include="Aggr.LogWarpper.cs" />
     <Compile Include="Aggr.cs" />
+    <Compile Include="AppBase.cs" />
     <Compile Include="Networks\NetworkClient.cs" />
     <Compile Include="Networks\NetworkConfigure.cs" />
     <Compile Include="Networks\INetworkSession.cs" />
