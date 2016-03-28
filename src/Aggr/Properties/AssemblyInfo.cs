@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("aggrengine.com")]
 [assembly: AssemblyProduct("AggrEngine")]
-[assembly: AssemblyCopyright("Copyright (c) aggrengine.com 2015-2018")]
+[assembly: AssemblyCopyright("Copyright (c) 2015-2018 AggrEngine, Inc")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
