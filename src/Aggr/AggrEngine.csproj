@@ -58,6 +58,7 @@
     <Compile Include="Networks\NetworkException.cs" />
     <Compile Include="Networks\NetworkServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteLoader.cs" />
     <Compile Include="Runtime.cs" />
   </ItemGroup>
   <ItemGroup>

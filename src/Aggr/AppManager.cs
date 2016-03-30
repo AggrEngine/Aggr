@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace AggrEngine
 {
+
     static class AppManager
     {
         private const string MasterAppId = "master";
@@ -18,7 +20,22 @@ namespace AggrEngine
         internal static string AppPath { get; set; }
         public static string AppServerId { get; internal set; } = MasterAppId;
         static List<Process> serverProcess = new List<Process>();
-        
+
+        public static void Print(string str, ConsoleColor? color = null)
+        {
+            if (color.HasValue)
+            {
+                ConsoleColor c = Console.ForegroundColor;
+                Console.ForegroundColor = color.Value;
+                Console.WriteLine(str);
+                Console.ForegroundColor = c;
+            }
+            else
+            {
+                Console.WriteLine(str);
+            }
+        }
+
         internal static void Start(string[] args)
         {
             AppAssemblyFile = args[0];
@@ -26,34 +43,35 @@ namespace AggrEngine
             {
                 AppServerId = args[1];
             }
+            var execulePath = AppDomain.CurrentDomain.BaseDirectory;
             CurrentDirectory = Environment.CurrentDirectory;
             AppPath = Path.Combine(CurrentDirectory, Path.GetDirectoryName(AppAssemblyFile));
-            string appName = Path.GetFileNameWithoutExtension(AppAssemblyFile);
+            string appName = Path.Combine(AppPath, Path.GetFileNameWithoutExtension(AppAssemblyFile) + ".dll");
+            string domainPath = Path.Combine(AppPath, "domain_temp");
             AppDomainSetup setup = new AppDomainSetup();
             setup.ApplicationBase = AppPath;
             setup.PrivateBinPath = "bin;bin/debug;bin/release";
             setup.ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            setup.CachePath = domainPath;
             setup.ShadowCopyFiles = "true";
-            setup.ShadowCopyDirectories = setup.ApplicationBase;
+            setup.ShadowCopyDirectories = AppPath;
             setup.ApplicationName = AppServerId;
+            //AppDomain.CurrentDomain.SetShadowCopyFiles();
 
             // Set up the Evidence
             Evidence baseEvidence = AppDomain.CurrentDomain.Evidence;
             Evidence evidence = new Evidence(baseEvidence);
             // Create the AppDomain
-            appDomain = AppDomain.CreateDomain(AppServerId, evidence, setup);
+            appDomain = AppDomain.CreateDomain("Domain" + AppServerId, evidence, setup);
             appDomain.SetData("AppPath", AppPath);
             appDomain.SetData("ServerID", AppServerId);
-            var app = appDomain.CreateInstanceAndUnwrap(appName, MainClass) as AppBase;
-            if (app != null)
-            {
-                Aggr.Info("App {0} PID:{1} is started...", MasterAppId, Process.GetCurrentProcess().Id);
-                app.Process();
-            }
-            else
-            {
-                throw new Exception(string.Format("Not found class \"{0}.cs\".", MainClass));
-            }
+            var type = typeof(RemoteLoader);
+            string name = type.Assembly.GetName().FullName;
+            var remoteLoader = (RemoteLoader)appDomain.CreateInstanceAndUnwrap(name, type.FullName);
+            Print(appName);
+            Print(string.Format("App {0} PID:{1} is started...", MasterAppId, Process.GetCurrentProcess().Id));
+            remoteLoader.ExecuteMothod(appName, MainClass, "StartRun");
+
             if (AppServerId == MasterAppId)
             {
                 //TODO read config
@@ -61,26 +79,8 @@ namespace AggrEngine
                 StartServerProcess("connector-server-2");
 
             }
-            RunAsync().Wait();
-        }
-        private static Task RunAsync()
-        {
-            return Task.Factory.StartNew(() =>
-            {
-                Runtime.Start();
-                while (!Runtime.IsCancel)
-                {
-                    try
-                    {
-                        Runtime.Update();
-                    }
-                    catch (Exception e)
-                    {
-                        Aggr.Error("App runtime Update method error", e);
-                    }
-                    Thread.Sleep(Runtime.Frequency);
-                }
-            });
+
+            remoteLoader.ExecuteMothod(appName, MainClass, "RunWaitLoop");
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace AggrEngine
             process.StartInfo.UseShellExecute = false;
             process.Start();
             serverProcess.Add(process);
-            Aggr.Info("App {0} PID:{1} is started...", serverID, process.Id);
+            Print(string.Format("App {0} PID:{1} is started...", serverID, process.Id));
         }
     }
 }

@@ -13,14 +13,14 @@ namespace AggrEngine
         {
             try
             {
-                Console.WriteLine("Aggr engine server app");
-                Console.WriteLine("  Version: {0}", Assembly.GetExecutingAssembly().GetName().Version);
-                Console.WriteLine("Copyright (c) 2015-2018 AggrEngine, Inc.");
+                AppManager.Print("Aggr engine server app", ConsoleColor.Yellow);
+                AppManager.Print(string.Format("  Version: {0}", Assembly.GetExecutingAssembly().GetName().Version), ConsoleColor.Yellow);
+                AppManager.Print("Copyright (c) 2015-2018 AggrEngine, Inc.", ConsoleColor.Yellow);
                 Console.WriteLine();
                 if (args.Length == 0)
                 {
                     //command help
-                    Aggr.Info("Usage args <AssembllyName> [ServerID].");
+                    AppManager.Print("Usage args <AssembllyName> [ServerID].", ConsoleColor.Red);
                     return;
                 }
                 Console.CancelKeyPress += OnCancel;
@@ -28,7 +28,7 @@ namespace AggrEngine
             }
             catch (Exception ex)
             {
-                Aggr.Error("Aggr app error", ex);
+                AppManager.Print(string.Format("Aggr app error:{0}-{1}", ex.Message, ex.StackTrace), ConsoleColor.Red);
             }
         }
 

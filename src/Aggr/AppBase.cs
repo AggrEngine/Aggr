@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AggrEngine
@@ -10,19 +11,37 @@ namespace AggrEngine
     /// <summary>
     /// 
     /// </summary>
-    public abstract class AppBase : MarshalByRefObject
+    public abstract class AppBase
     {
         /// <summary>
-        /// 
+        /// call enter main method.
         /// </summary>
-        public void Process()
+        public void StartRun()
         {
             Runtime.AppPath = AppDomain.CurrentDomain.GetData("AppPath") as string;
             ServerID = AppDomain.CurrentDomain.GetData("ServerID") as string;
             Start();
             StartAfter();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RunWaitLoop()
+        {
+            Runtime.Start();
+            while (!Runtime.IsCancel)
+            {
+                try
+                {
+                    Runtime.Update();
+                }
+                catch (Exception e)
+                {
+                    Aggr.Error("App runtime Update method error", e);
+                }
+                Thread.Sleep(Runtime.Frequency);
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
